@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Renal Diet IQ Game - Kerala Style</title>
+  <style>
+    body {
+      font-family: 'Noto Sans Malayalam', sans-serif;
+      background-color: #f0f8f7;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      color: #2e4a4a;
+    }
+    header {
+      background-color: #00695c;
+      padding: 1em;
+      color: white;
+      font-size: 1.8em;
+    }
+    .question-box {
+      margin: 2em auto;
+      padding: 1.5em;
+      width: 80%;
+      max-width: 600px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+    .question {
+      font-size: 1.3em;
+      margin-bottom: 1em;
+    }
+    .options button {
+      display: block;
+      width: 100%;
+      margin: 0.5em 0;
+      padding: 0.75em;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      background-color: #a7ffeb;
+      cursor: pointer;
+    }
+    .options button:hover {
+      background-color: #64ffda;
+    }
+    .result {
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+     Renal Diet IQ Challenge 🍛🧠
+  </header>
+  <div class="question-box">
+    <div class="question" id="question">Loading question...</div>
+    <div class="options" id="options"></div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "Which of these is a kidney-safe breakfast?",
+        options: ["Puttu with Kadala curry", "Idiyappam with coconut milk", "Appam with egg curry", "Puttu with ripe banana"],
+        answer: "Idiyappam with coconut milk"
+      },
+      {
+        question: "Which fruit commonly eaten should be avoided in CKD?",
+        options: ["Banana", "Papaya", "Apple", "Pineapple"],
+        answer: "Banana"
+      },
+      {
+        question: "Which dish is lowest in sodium?",
+        options: ["Avial", "Sambar", "Pickle", "Fish curry"],
+        answer: "Avial"
+      },
+      {
+        question: "Which of these spices is safe and can replace salt in renal diet?",
+        options: ["Hing (Kayam)", "Mustard", "Salted lime", "Fish masala"],
+        answer: "Hing (Kayam)"
+      },
+      {
+        question: "Which is the best protein option for CKD from below  diet?",
+        options: ["Beef fry", "Boiled egg white", "Duck roast", "Chicken curry"],
+        answer: "Boiled egg white"
+      }
+    ];
+
+    let current = 0;
+
+    function loadQuestion() {
+      const q = quizData[current];
+      document.getElementById("question").innerText = q.question;
+      const optionsDiv = document.getElementById("options");
+      const resultDiv = document.getElementById("result");
+      resultDiv.innerText = "";
+      optionsDiv.innerHTML = "";
+
+      q.options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.innerText = option;
+        btn.onclick = () => {
+          if (option === q.answer) {
+            resultDiv.innerText = "✅ Correct!";
+            resultDiv.style.color = "green";
+          } else {
+            resultDiv.innerText = `❌ Wrong! Correct: ${q.answer}`;
+            resultDiv.style.color = "red";
+          }
+          setTimeout(() => {
+            current = (current + 1) % quizData.length;
+            loadQuestion();
+          }, 1500);
+        };
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    window.onload = loadQuestion;
+  </script>
+</body>
+</html>
